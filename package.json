@@ -1,0 +1,11 @@
+{
+  "name": "casestudy-api-book",
+  "version": "1.0.0",
+  "description": "Case study for developing a robust REST API for managing a collection of books, supporting CRUD operations and API endpoints.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "danvgar",
+  "license": "ISC"
+}
