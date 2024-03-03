@@ -50,6 +50,13 @@ MongoClient.connect(connectionString)
     // Routes / Endpoints
     // ********************
 
+    // Initial rendering EJS view to frontend for demo and testing purposes
+    app.get('/', (req, res) => {
+      db.collection('books').find().toArray()
+        .then(data => res.render('index.ejs', { books: data }))
+        .catch(err => console.log(err))
+    })
+
     // 1. GET /books: 
     // Retrieve a list of all books. 
     // Implement pagination to limit the number of books returned per request.
