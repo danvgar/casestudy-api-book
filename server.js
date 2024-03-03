@@ -28,6 +28,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+// Using EJS and Frontend for testing and demonstration purposes
+app.set('view engine', 'ejs')
+
 // ********************
 // Database
 // ********************
@@ -41,7 +44,7 @@ MongoClient.connect(connectionString)
     // Create a new MongoDB Database
     const db = client.db('books-db')
     // Create a new MongoDB Collection within the Database
-    const quotesCollection = db.collection('books')
+    const collection = db.collection('books')
 
     // ********************
     // Routes / Endpoints
