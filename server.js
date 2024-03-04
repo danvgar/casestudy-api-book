@@ -15,11 +15,11 @@ require('dotenv').config({
 // Placeholder Data 
 // ********************
 // For testing purposes, can be removed or commented out once database is running successfully
-const books = [
-  { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', publicationYear: 1925 },
-  { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee', publicationYear: 1960 },
-  { id: 3, title: '1984', author: 'George Orwell', publicationYear: 1949 }
-];
+// const books = [
+//   { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', publicationYear: 1925 },
+//   { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee', publicationYear: 1960 },
+//   { id: 3, title: '1984', author: 'George Orwell', publicationYear: 1949 }
+// ];
 
 // ********************
 // Middleware 
@@ -36,15 +36,16 @@ app.set('view engine', 'ejs')
 // ********************
 
 // Connect to MongoDB through dotenv environment variables, for security purposes.
-const connectionString = process.env.DB_URL;
+// These values must match the MongoDB database to run successfully
+const CONNECTION_STRING = process.env.DB_URL;
+const DB_NAME = 'books_db';
+const COLLECTION_NAME = 'books_collection';
 
-MongoClient.connect(connectionString)
+MongoClient.connect(CONNECTION_STRING)
   .then(client => {
     console.log('Successfully connected to Database')
-    // Create a new MongoDB Database
-    const db = client.db('books-db')
-    // Create a new MongoDB Collection within the Database
-    const collection = db.collection('books')
+    const db = client.db(DB_NAME)
+    const collection = db.collection(COLLECTION_NAME)
 
     // ********************
     // Routes / Endpoints
@@ -52,8 +53,13 @@ MongoClient.connect(connectionString)
 
     // Initial rendering EJS view to frontend for demo and testing purposes
     app.get('/', (req, res) => {
-      db.collection('books').find().toArray()
-        .then(data => res.render('index.ejs', { books: data }))
+      db.collection(COLLECTION_NAME)
+        .find()
+        .toArray()
+        .then(data => {
+          res.render('index.ejs', { books: data })
+          console.log(data);
+        })
         .catch(err => console.log(err))
     })
 
@@ -61,45 +67,45 @@ MongoClient.connect(connectionString)
     // Retrieve a list of all books. 
     // Implement pagination to limit the number of books returned per request.
     app.get('/books', (req, res) => {
-
+      console.log(req.body);
     })
 
     // 2. GET /books/{id}: 
     // Retrieve details of a specific book by ID.
     app.get('/books/{id}', (req, res) => {
-
+      console.log(req.body);
     })
 
     // 3. POST /books: 
     // Add a new book to the collection. 
     // Implement input validation to ensure all required fields are provided (`title`, `author`, `publicationYear`), and `publicationYear` should be a valid year in the past.
     app.post('/books', (req, res) => {
-
+      console.log(req.body);
     })
 
     // 4. PUT /books/{id}: 
     // Update details of a specific book by ID. 
     // Allow partial updates, and ensure validation is applied to the input data.
     app.put('/books/{id}', (req, res) => {
-
+      console.log(req.body);
     })
 
     // 5. DELETE /books/{id}: 
     // Delete a specific book by ID.
     app.delete('/books/{id}', (req, res) => {
-
+      console.log(req.body);
     })
 
     // 6. GET /books/search?q={query}: 
     // Implement search functionality to allow users to search for books by title or author.
     app.get('book/search', (req, res) => {
-
+      console.log(req.body);
     })
 
     // 7. GET /books/stats: 
     // Provide statistics about the collection of books, including the total number of books, the earliest and latest publication years, and any other relevant metrics you think are appropriate.
     app.get('books/stats', (req, res) => {
-
+      console.log(req.body);
     })
 
 

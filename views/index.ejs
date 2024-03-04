@@ -27,13 +27,13 @@
         <% for(let i=0; i < books.length; i++) {%>
             <li>
                 <span>
-                    "<%= books[i].title %>""
-                </span> (
+                    "<%= books[i].title %>"
+                </span>
                 <span>
-                    <%= books[i].publicationYear %>
-                </span>) by
+                    by <%= books[i].author %>
+                </span>
                 <span>
-                    <%= books[i].author %>
+                    (Published <%= books[i].publicationYear %>)
                 </span>
             </li>
             <% } %>
