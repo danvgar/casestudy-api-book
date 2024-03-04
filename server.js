@@ -88,7 +88,7 @@ MongoClient.connect(CONNECTION_STRING)
 
     // 2. GET /books/{id}: 
     // Retrieve details of a specific book by ID.
-    app.get('/books/{id}', (req, res) => {
+    app.get('/books/:id', (req, res) => {
       console.log(req.body);
     })
 
@@ -97,18 +97,23 @@ MongoClient.connect(CONNECTION_STRING)
     // Implement input validation to ensure all required fields are provided (`title`, `author`, `publicationYear`), and `publicationYear` should be a valid year in the past.
     app.post('/books', (req, res) => {
       console.log(req.body);
+      collection.insertOne(req.body)
+        .then(result => {
+          console.log(result)
+        })
+        .catch(error => console.error(error))
     })
 
     // 4. PUT /books/{id}: 
     // Update details of a specific book by ID. 
     // Allow partial updates, and ensure validation is applied to the input data.
-    app.put('/books/{id}', (req, res) => {
+    app.put('/books/:id', (req, res) => {
       console.log(req.body);
     })
 
     // 5. DELETE /books/{id}: 
     // Delete a specific book by ID.
-    app.delete('/books/{id}', (req, res) => {
+    app.delete('/books/:id', (req, res) => {
       console.log(req.body);
     })
 
