@@ -1,45 +1,61 @@
 // ********************
-// Dependencies
-// ********************
-const express = require('express');
-const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
-const cors = require('cors');
-
-// Connect to Environment Variables for connection string security purposes. 
-require('dotenv').config({
-  path: '.env',
-});
-
-// ********************
 // Placeholder Data 
 // ********************
-// For testing purposes, can be removed or commented out once database is running successfully
+// ABOUT - For testing purposes, can be removed or commented out once database is running successfully
 // const books = [
 //   { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', publicationYear: 1925 },
 //   { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee', publicationYear: 1960 },
 //   { id: 3, title: '1984', author: 'George Orwell', publicationYear: 1949 }
 // ];
 
+
+
+// ********************
+// DEPENDENCIES
+// ********************
+const express = require('express'); // For server HTTP req
+const bodyParser = require('body-parser'); // For parsing req into JSON
+const MongoClient = require('mongodb').MongoClient; // For MongoDB connection. 
+const cors = require('cors'); // For CORS headers
+const dotenv = require('dotenv'); // For environment variables
+
+const app = express(); // Initialize express
+
+
+
+// ********************
+// CONFIG & SETUP
+// ********************
+
+// ENVIRONMENT VARIABLES SETUP
+// ABOUT - Connect to environment variables for connection string security. 
+dotenv.config({
+  path: '.env', // Replace file path string for environment variables.
+});
+
+// HTML / JS TEMPLATING SETUP
+// ABOUT - Using EJS and Frontend for testing and demonstration purposes
+app.set('view engine', 'ejs') // Using EJS as templating language for demo purposes. 
+
+// MONGO DB SETUP
+// ABOUT - These values must match the MongoDB database to run successfully
+const CONNECTION_STRING = process.env.DB_URL; // MongoDB connection URL
+const DB_NAME = 'books_db'; // MongoDB database name
+const COLLECTION_NAME = 'books_collection'; // MongoDB collection name
+
+
+
 // ********************
 // Middleware 
 // ********************
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
+app.use(bodyParser.json()); // Parse requests into JSON
+app.use(cors()); // Use CORS Headers
 
-// Using EJS and Frontend for testing and demonstration purposes
-app.set('view engine', 'ejs')
+
 
 // ********************
 // Database
 // ********************
-
-// Connect to MongoDB through dotenv environment variables, for security purposes.
-// These values must match the MongoDB database to run successfully
-const CONNECTION_STRING = process.env.DB_URL;
-const DB_NAME = 'books_db';
-const COLLECTION_NAME = 'books_collection';
 
 MongoClient.connect(CONNECTION_STRING)
   .then(client => {
