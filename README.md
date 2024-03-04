@@ -1,21 +1,9 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
 
   <h3 align="center">Best-README-Template</h3>
 
@@ -229,7 +217,7 @@ Each book should have the following attributes:
 - `author`
 - `publicationYear`
 
-# Data
+## Data
 You can structure the data in a MySQL or MongoDB database. Here's an example of how the data might look:
 
 ```javascript
@@ -240,7 +228,7 @@ const books = [
 ];
 ```
 
-# Output Requirements
+## Output Requirements
 - The API should be RESTful and follow best practices.
 - Implement pagination for listing books.
 - Implement proper input validation for POST and PUT endpoints.
@@ -249,7 +237,7 @@ const books = [
 - Write clean, well-structured, and maintainable code.
 - Include thorough documentation and comments.
 
-# Evaluation Criteria
+## Evaluation Criteria
 - Correctness and completeness of API implementation.
 - Implementation of pagination, search, and statistics functionality.
 - Quality of code (readability, maintainability, efficiency).
@@ -257,14 +245,14 @@ const books = [
 - Error handling, input validation, and edge cases handling.
 - Documentation quality and completeness.
 
-# Submission
+## Submission
 - The candidate should deliver the completed project via email the next day.
 - The submission should be a compressed folder containing the project files.
 - Include a README file with instructions on how to run the application locally.
 - Ensure the project is well-organized and easy to understand.
 Database dump file
 
-# Additional Notes
+## Additional Notes
 - Utilize asynchronous programming paradigms where appropriate.
 - Implement unit tests to ensure the reliability of the API.
 - Consider scalability and performance optimizations.
