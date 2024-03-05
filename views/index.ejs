@@ -25,7 +25,7 @@
     <ul>
         <!-- Loop through books -->
         <% for(let i=0; i < books.length; i++) {%>
-            <li>
+            <li data-id=<%= books[i]._id %>>
                 <span>
                     "<%= books[i].title %>"
                 </span>

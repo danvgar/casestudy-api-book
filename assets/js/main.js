@@ -7,22 +7,17 @@ Array.from(deleteLinks).forEach(element => {
     element.addEventListener('click', deleteBook)
 })
 
-function deleteBook() {
-    const bookID;
-    try {
-        fetch('deleteBooks', {
-            method: 'delete',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                'stageNameS': sName,
-                'birthNameS': bName,
-            })
-        })
-    }
-    catch (err) {
-        console.error(err)
-    }
-}
+// function deleteBook() {
+//     // const bookID = this.parentNode.childeNodes[0].innerText;
+//     try {
+//         fetch('delete', {
+//             method: 'DELETE',
+//         })
+//     }
+//     catch (err) {
+//         console.error(err)
+//     }
+// }
 
 
 // ********************

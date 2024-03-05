@@ -14,11 +14,9 @@
 // DEPENDENCIES
 // ********************
 const express = require('express'); // For server HTTP req
-const bodyParser = require('body-parser'); // For parsing req into JSON
-const MongoClient = require('mongodb').MongoClient; // For MongoDB connection. 
+const { MongoClient, ObjectID } = require('mongodb'); // For MongoDB connection. 
 const cors = require('cors'); // For CORS headers
 const dotenv = require('dotenv'); // For environment variables
-
 const app = express(); // Initialize express
 
 
@@ -32,13 +30,15 @@ const app = express(); // Initialize express
 // --
 dotenv.config({
   // Replace file path string for environment variables.
-  path: '.env', 
+  path: '.env',
 });
+
 
 // HTML / JS TEMPLATING SETUP
 // ABOUT - Using EJS and Frontend for testing and demonstration purposes
 // --
 app.set('view engine', 'ejs') // Set view engine to EJS
+
 
 // MONGO DB SETUP
 // ABOUT - These values must match the MongoDB database to run successfully
@@ -47,11 +47,14 @@ const CONNECTION_STRING = process.env.DB_URL; // Get MongoDB connection URL
 const DB_NAME = 'books_db'; // Set MongoDB database name
 const COLLECTION_NAME = 'books_collection'; // Set MongoDB collection name
 
-// BODY-PARSER SETUP
-// ABOUT - Used to parse request bodies into JSON. Do not need to adjust
+
+// JSON PARSING SETUP
+// ABOUT - Used to parse request bodies into JSON.
 // --
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json()); // Parse requests into JSON
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 
 // CORS SETUP
 // ABOUT - 
@@ -59,10 +62,12 @@ app.use(bodyParser.json()); // Parse requests into JSON
 app.use(cors()); // Use CORS Headers
 
 
+
 // ********************
 // Database
 // ********************
 
+// Connect to database
 MongoClient.connect(CONNECTION_STRING)
   .then(client => {
     console.log('Successfully connected to Database')
@@ -74,15 +79,16 @@ MongoClient.connect(CONNECTION_STRING)
     // ********************
 
     // Initial rendering EJS view to frontend for demo and testing purposes
+    // Can get rid of this once GET /books is up and running. 
     app.get('/', (req, res) => {
-      db.collection(COLLECTION_NAME)
+      collection
         .find()
         .toArray()
         .then(data => {
-          res.render('index.ejs', { books: data })
-          // console.log(data);
+          res.render('index.ejs', { books: data }) // Currently set-up to render EJS, but should be updated to send JSON
+          // res.json(data)
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
     })
 
     // 1. GET /books: 
@@ -90,12 +96,32 @@ MongoClient.connect(CONNECTION_STRING)
     // Implement pagination to limit the number of books returned per request.
     app.get('/books', (req, res) => {
       // console.log(req.body);
+      try {
+        collection
+          .find()
+          .toArray()
+          .then(data => {
+            res.render('index.ejs', { books: data })
+            // res.json(data)
+          })
+          .catch(err => console.error(err))
+      }
+      catch (err) {
+        console.error(err)
+      }
     })
 
     // 2. GET /books/{id}: 
     // Retrieve details of a specific book by ID.
     app.get('/books/:id', (req, res) => {
       // console.log(req.body);
+      try {
+        // res.json(data)
+
+      }
+      catch (err) {
+        console.error(err)
+      }
     })
 
     // 3. POST /books: 
@@ -103,12 +129,13 @@ MongoClient.connect(CONNECTION_STRING)
     // Implement input validation to ensure all required fields are provided (`title`, `author`, `publicationYear`), and `publicationYear` should be a valid year in the past.
     app.post('/books', (req, res) => {
       // console.log(req.body);
-      collection.insertOne(req.body) // Insert req.body as a doc into the collection
+      collection
+        .insertOne(req.body) // Insert req.body as a doc into the collection
         .then(result => {
           console.log(`Book "${req.body.title}" added.`)
           res.redirect('/'); // After successful submission of form, refresh the page. 
         })
-        .catch(error => console.error(error))
+        .catch(err => console.error(err))
     })
 
     // 4. PUT /books/{id}: 
@@ -116,24 +143,51 @@ MongoClient.connect(CONNECTION_STRING)
     // Allow partial updates, and ensure validation is applied to the input data.
     app.put('/books/:id', (req, res) => {
       // console.log(req.body);
+      try {
+
+      }
+      catch (err) {
+        console.error(err)
+      }
     })
 
     // 5. DELETE /books/{id}: 
     // Delete a specific book by ID.
     app.delete('/books/:id', (req, res) => {
       // console.log(req.body);
+      const bookID = req.params.id; // Grab ID from URL params
+      try {
+        collection
+          .deleteOne({ _id: ObjectId(bookID) });
+          res.redirect('/')
+      }
+      catch (err) {
+        console.error(err)
+      }
     })
 
     // 6. GET /books/search?q={query}: 
     // Implement search functionality to allow users to search for books by title or author.
     app.get('book/search', (req, res) => {
       // console.log(req.body);
+      try {
+
+      }
+      catch (err) {
+        console.error(err)
+      }
     })
 
     // 7. GET /books/stats: 
     // Provide statistics about the collection of books, including the total number of books, the earliest and latest publication years, and any other relevant metrics you think are appropriate.
     app.get('books/stats', (req, res) => {
       // console.log(req.body);
+      try {
+
+      }
+      catch (err) {
+        console.error(err)
+      }
     })
 
 
@@ -154,7 +208,7 @@ MongoClient.connect(CONNECTION_STRING)
       console.log(`Server running on port ${PORT}`);
     });
   })
-  .catch(err => console.log(err))
+  .catch(err => console.error(err))
 
 
 //   Output Requirements:
