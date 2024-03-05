@@ -29,28 +29,34 @@ const app = express(); // Initialize express
 
 // ENVIRONMENT VARIABLES SETUP
 // ABOUT - Connect to environment variables for connection string security. 
+// --
 dotenv.config({
-  path: '.env', // Replace file path string for environment variables.
+  // Replace file path string for environment variables.
+  path: '.env', 
 });
 
 // HTML / JS TEMPLATING SETUP
 // ABOUT - Using EJS and Frontend for testing and demonstration purposes
-app.set('view engine', 'ejs') // Using EJS as templating language for demo purposes. 
+// --
+app.set('view engine', 'ejs') // Set view engine to EJS
 
 // MONGO DB SETUP
 // ABOUT - These values must match the MongoDB database to run successfully
-const CONNECTION_STRING = process.env.DB_URL; // MongoDB connection URL
-const DB_NAME = 'books_db'; // MongoDB database name
-const COLLECTION_NAME = 'books_collection'; // MongoDB collection name
+// --
+const CONNECTION_STRING = process.env.DB_URL; // Get MongoDB connection URL
+const DB_NAME = 'books_db'; // Set MongoDB database name
+const COLLECTION_NAME = 'books_collection'; // Set MongoDB collection name
 
-
-
-// ********************
-// Middleware 
-// ********************
+// BODY-PARSER SETUP
+// ABOUT - Used to parse request bodies into JSON. Do not need to adjust
+// --
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json()); // Parse requests into JSON
-app.use(cors()); // Use CORS Headers
 
+// CORS SETUP
+// ABOUT - 
+// --
+app.use(cors()); // Use CORS Headers
 
 
 // ********************
@@ -74,7 +80,7 @@ MongoClient.connect(CONNECTION_STRING)
         .toArray()
         .then(data => {
           res.render('index.ejs', { books: data })
-          console.log(data);
+          // console.log(data);
         })
         .catch(err => console.log(err))
     })
@@ -83,23 +89,24 @@ MongoClient.connect(CONNECTION_STRING)
     // Retrieve a list of all books. 
     // Implement pagination to limit the number of books returned per request.
     app.get('/books', (req, res) => {
-      console.log(req.body);
+      // console.log(req.body);
     })
 
     // 2. GET /books/{id}: 
     // Retrieve details of a specific book by ID.
     app.get('/books/:id', (req, res) => {
-      console.log(req.body);
+      // console.log(req.body);
     })
 
     // 3. POST /books: 
     // Add a new book to the collection. 
     // Implement input validation to ensure all required fields are provided (`title`, `author`, `publicationYear`), and `publicationYear` should be a valid year in the past.
     app.post('/books', (req, res) => {
-      console.log(req.body);
-      collection.insertOne(req.body)
+      // console.log(req.body);
+      collection.insertOne(req.body) // Insert req.body as a doc into the collection
         .then(result => {
-          console.log(result)
+          console.log(`Book "${req.body.title}" added.`)
+          res.redirect('/'); // After successful submission of form, refresh the page. 
         })
         .catch(error => console.error(error))
     })
@@ -108,25 +115,25 @@ MongoClient.connect(CONNECTION_STRING)
     // Update details of a specific book by ID. 
     // Allow partial updates, and ensure validation is applied to the input data.
     app.put('/books/:id', (req, res) => {
-      console.log(req.body);
+      // console.log(req.body);
     })
 
     // 5. DELETE /books/{id}: 
     // Delete a specific book by ID.
     app.delete('/books/:id', (req, res) => {
-      console.log(req.body);
+      // console.log(req.body);
     })
 
     // 6. GET /books/search?q={query}: 
     // Implement search functionality to allow users to search for books by title or author.
     app.get('book/search', (req, res) => {
-      console.log(req.body);
+      // console.log(req.body);
     })
 
     // 7. GET /books/stats: 
     // Provide statistics about the collection of books, including the total number of books, the earliest and latest publication years, and any other relevant metrics you think are appropriate.
     app.get('books/stats', (req, res) => {
-      console.log(req.body);
+      // console.log(req.body);
     })
 
 
