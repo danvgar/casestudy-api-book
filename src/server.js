@@ -5,8 +5,9 @@ const express = require('express'); // For server HTTP req
 const { MongoClient, ObjectID } = require('mongodb'); // For MongoDB connection. 
 const cors = require('cors'); // For CORS headers
 const dotenv = require('dotenv'); // For environment variables
-const app = express(); // Initialize express
+const books = require('/src/books')
 
+const app = express(); // Initialize express
 
 // ********************
 // CONFIG & SETUP
@@ -21,10 +22,13 @@ dotenv.config({
 });
 
 
-// HTML / JS TEMPLATING SETUP
-// ABOUT - Using EJS and Frontend for testing and demonstration purposes
+// SETUP
+// ABOUT - 
 // --
-app.set('view engine', 'ejs') // Set view engine to EJS
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(cors()); // Use CORS Headers
 
 
 // MONGO DB SETUP
@@ -35,25 +39,6 @@ const DB_NAME = 'books_db'; // Set MongoDB database name
 const COLLECTION_NAME = 'books_collection'; // Set MongoDB collection name
 
 
-// JSON PARSING SETUP
-// ABOUT - Used to parse request bodies into JSON.
-// --
-app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
-
-// CORS SETUP
-// ABOUT - 
-// --
-app.use(cors()); // Use CORS Headers
-
-
-
-// ********************
-// Database
-// ********************
-
 // Connect to database
 MongoClient.connect(CONNECTION_STRING)
   .then(client => {
@@ -62,7 +47,8 @@ MongoClient.connect(CONNECTION_STRING)
     const collection = db.collection(COLLECTION_NAME)
     const PORT = process.env.PORT || 3000;
 
-    // app.use()
+    app.use('/books', books) 
+    // Reusable, mountable router through express.Router() class
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
