@@ -5,14 +5,14 @@ const express = require('express'); // For server HTTP req
 const { MongoClient, ObjectID } = require('mongodb'); // For MongoDB connection. 
 const cors = require('cors'); // For CORS headers
 const dotenv = require('dotenv'); // For environment variables
-const books = require('/src/books')
+const router = require('/src/routes/books')
 
 const app = express(); // Initialize express
 
 // ********************
 // CONFIG & SETUP
 // ********************
-
+ 
 // ENVIRONMENT VARIABLES SETUP
 // ABOUT - Connect to environment variables for connection string security. 
 // --
@@ -47,8 +47,8 @@ MongoClient.connect(CONNECTION_STRING)
     const collection = db.collection(COLLECTION_NAME)
     const PORT = process.env.PORT || 3000;
 
-    app.use('/books', books) 
-    // Reusable, mountable router through express.Router() class
+    // Utilizing express.Router() class for mountable routes
+    app.use('/books', router(db)) 
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
