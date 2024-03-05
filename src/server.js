@@ -55,3 +55,6 @@ MongoClient.connect(CONNECTION_STRING)
     });
   })
   .catch(err => console.error(err))
+
+  // Export app for testing
+  module.exports = app
