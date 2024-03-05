@@ -11,8 +11,6 @@ const router = express.Router()
 // Routes / Endpoints
 // ********************
 
-// Initial rendering EJS view to frontend for demo and testing purposes
-// Can get rid of this once GET /books is up and running. 
 router.get('/', (req, res) => {
     try {
         collection
