@@ -4,6 +4,8 @@
 const express = require('express');
 const { MongoDB, ObjectID } = require('mongodb');
 
+const router = express.Router()
+
 // ********************
 // Routes / Endpoints
 // ********************
