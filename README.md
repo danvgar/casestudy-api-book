@@ -132,7 +132,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
   - Identify additional edge cases
 - Improve FrontEnd
   - EJS (Embedded JavaScript Templating) is used for demo purposes.
-  - Consider similar dynamic frameworks and libraries such as React.js for DOM manipulation. 
+  - Consider similar dynamic frameworks and libraries such as React.js for DOM manipulation.
+- Sorting Functionality
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
