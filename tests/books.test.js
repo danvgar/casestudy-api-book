@@ -12,11 +12,21 @@ describe('Testing API Endpoints', () => {
         it('should retrieve a list of all books. Implement pagination to limit the number of books returned per request.', async () => {
             const response = await request(app).get('/books');
             expect(response.status).to.equal(200);
+            expect(response.body).to.be.an('array');
         });
     });
+
     // 2. Test GET /books/{id}: 
     describe('GET /books/:id', () => {
         it('should retrieve details of a specific book by ID', async () => {
+            // Test Book
+            // { 
+            //     id: 1, 
+            //     title: 'The Great Gatsby', 
+            //     author: 'F. Scott Fitzgerald', 
+            //     publicationYear: 1925 
+            // }
+
             const response = await request(app).get(`/books${bookID}`)
             expect(response.status).to.equal(200);
         });
@@ -25,8 +35,9 @@ describe('Testing API Endpoints', () => {
     // 3. Test POST /books: 
     describe('POST /books', () => {
         it('should add a new book to the collection, and use input validation to ensure all required fields are provided (`title`, `author`, `publicationYear`), and `publicationYear` should be a valid year in the past.', async () => {
-            const response = await request(app).post('/books');
-            expect(response.status).to.equal(200);
+
+            const response = await request(app).post('/books').send(newBook);;
+            expect(response.status).to.equal(201);
         });
     });
 
